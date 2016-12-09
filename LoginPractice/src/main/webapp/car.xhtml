@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head></h:head> 
+<body> 
+
+	<h1>Car</h1>
+	
+	<h:form id="frmCar">
+	 Name:<h:inputText value="#{carController.car.name}" />
+	 Color:<h:inputText value="#{carController.car.color}" />
+	 Model:<h:inputText value="#{carController.car.model}" />
+
+	 <h:commandButton action="#{carController.save}" value="Save">
+	 <f:ajax execute="frmCar" render="dtCar"/>
+	</h:commandButton>
+	
+	<h:commandButton rendered="#{carController.editMode}" action="#{carController.save}" value="Cancel" >
+		<f:ajax render="frmCar"></f:ajax>
+	</h:commandButton>
+	 <h:dataTable value="#{carController.cars}" var="car" id="dtCar">
+	 	<h:column>
+	 	<f:facet name="header">ID</f:facet>
+	 		#{car.id}
+	 	</h:column>
+	 	<h:column>
+	 	<f:facet name="header">Name</f:facet>
+	 		#{car.name}
+	 	</h:column>
+	 	<h:column>
+	 	<f:facet name="header">Color</f:facet>
+	 		#{car.color}
+	 	</h:column>
+	 		<h:column>
+	 	<f:facet name="header">Model</f:facet>
+	 		#{car.model}
+	 	</h:column>
+	 	<h:column>
+	 		<f:facet name="header">Actions</f:facet>
+	 		<h:commandButton action="#{carController.delete(car)}" value="Delete" onclick="return window.confirm ('Are you sure?')"><f:ajax render="frmCar:dtCar" /></h:commandButton>
+	 		<h:commandButton action="#{carController.update(car)}" value="Update"><f:ajax render="frmCar"/></h:commandButton>
+	 	</h:column>
+	 </h:dataTable>
+</h:form>
+</body> 
+</html>
